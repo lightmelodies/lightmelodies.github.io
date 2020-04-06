@@ -2,7 +2,23 @@
 title: "Pixiv Crawler"
 ---
 
-{% highlight javascript %}
+{% highlight typescript %}
+import request from "request";
+import fs from "fs";
+
+const pixiv =
+  "https://www.pixiv.net/ajax/search/illustrations/初音ミク 30000users入り";
+
+const cookie = "...";
+
+interface Illust {
+  illustId: string;
+  illustTitle: string;
+  userId: string;
+  userName: string;
+  url: string;
+}
+
 function crawler(page: number) {
   request({ url: encodeURI(pixiv + `?p=${page}`) }, (_e, _r, body) => {
     let json = JSON.parse(body);
@@ -34,4 +50,13 @@ function crawler(page: number) {
     });
   });
 }
+
+request({ url: encodeURI(pixiv) }, (_e, _r, body) => {
+  let total = JSON.parse(body).body.illust.total;
+  console.log(total);
+  for (let i = 1; i < total / 60; i++) {
+    crawler(i);
+  }
+});
+
 {% endhighlight %}
