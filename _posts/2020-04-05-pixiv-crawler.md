@@ -28,10 +28,6 @@ function crawler(page: number) {
         .replace(
           /\/c\/250x250_80_a2\/img-master(.*?)_square1200/,
           "/img-original$1"
-        )
-        .replace(
-          /\/c\/250x250_80_a2\/custom-thumb(.*?)_custom1200/,
-          "/img-original$1"
         );
       const req = request({
         url: url,
